@@ -18,4 +18,16 @@ public class Suffix implements Comparable<Suffix>
     {
         return this.suffix.compareTo(o.suffix);
     }
+
+    public void swap(Suffix a)
+    {
+        int start = this.start;
+        String suffix = this.suffix;
+
+        this.start = a.start;
+        this.suffix = a.suffix;
+
+        a.start = start;
+        a.suffix = suffix;
+    }
 }

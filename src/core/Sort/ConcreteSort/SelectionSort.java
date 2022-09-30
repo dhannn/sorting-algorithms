@@ -3,10 +3,10 @@ package core.Sort.ConcreteSort;
 import core.Suffix;
 import core.Sort.AbstractSort;
 
-public class DummySort extends AbstractSort
+public class SelectionSort extends AbstractSort
 {
 
-    public DummySort() {}
+    public SelectionSort() {}
 
     @Override
     public void sort(Suffix[] suffixes)
@@ -23,9 +23,7 @@ public class DummySort extends AbstractSort
                 }
             }
 
-            Suffix temp = suffixes[i];
-            suffixes[i] = suffixes[min];
-            suffixes[min] = temp;
+            suffixes[i].swap(suffixes[min]);
         }
     }
 }

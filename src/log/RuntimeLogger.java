@@ -5,11 +5,11 @@ import java.util.ArrayList;
 
 import core.Sort.SortTester;
 
-public class SummaryLogger extends Logger 
+public class RuntimeLogger extends Logger 
 {
     final private String FORMAT = "dat/raw_data/%sRuntime_%dSamples.csv";
 
-    public SummaryLogger(SortTester tester) throws IOException 
+    public RuntimeLogger(SortTester tester) throws IOException 
     {
         super(tester);
     }
@@ -36,6 +36,8 @@ public class SummaryLogger extends Logger
             this.printSamples(samples, n);
             n = n << 1;
         }
+
+        this.writer.close();
     }
 
     private void printSamples(ArrayList<Double> samples, int n) throws IOException

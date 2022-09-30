@@ -37,7 +37,7 @@ public class RawDataLogger extends Logger
         {
             SuffixArray currentSuffixArray = suffixArrays.get(i);
             this.iter = i;
-            this.iterN = currentSuffixArray.getN();
+            this.iterN = currentSuffixArray.getInputSize();
             this.iterK = i % this.tester.getK();
 
             this.writer = new FileWriter(getFilename());
@@ -51,7 +51,7 @@ public class RawDataLogger extends Logger
         this.writer.append("Sequence:\n" + curr.getBaseSequence() + "\n");
         this.writer.append("\nSuffix array:\n");
 
-        for(int i = 0; i < curr.getN(); i++)
+        for(int i = 0; i < curr.getInputSize(); i++)
         {
             this.writer.append(curr.get(i) + "\n");
         }

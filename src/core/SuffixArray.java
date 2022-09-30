@@ -9,7 +9,7 @@ public class SuffixArray
 {
     final private String ALPHABET;
     @Getter private AbstractSort sorter;
-    @Getter private int n;
+    @Getter private int inputSize;
     @Getter private String baseSequence = null;
     Suffix[] suffixes;
 
@@ -17,9 +17,9 @@ public class SuffixArray
     {
         this.sorter = sorter;
         this.ALPHABET = alphabet;
-        this.n = n;
+        this.inputSize = n;
         
-        this.suffixes = new Suffix[this.n];
+        this.suffixes = new Suffix[this.inputSize];
         this.generateRandom();
         this.generateSuffix();
     }
@@ -29,11 +29,16 @@ public class SuffixArray
         sorter.sort(this.suffixes);
     }
 
+    public String get(int i)
+    {
+        return suffixes[i].getSuffix();
+    }
+
     private void generateRandom()
     {
-        StringBuilder strBuilder = new StringBuilder(this.n);
+        StringBuilder strBuilder = new StringBuilder(this.inputSize);
 
-        for(int i = 0; i < this.n; i++)
+        for(int i = 0; i < this.inputSize; i++)
         {
             char randomChar = getRandomChar();
             strBuilder.append(randomChar);
@@ -52,15 +57,10 @@ public class SuffixArray
 
     private void generateSuffix()
     {
-        for(int i = 0; i < this.n; i++)
+        for(int i = 0; i < this.inputSize; i++)
         {
             Suffix suffix = new Suffix(this.baseSequence, i);
             this.suffixes[i] = suffix;
         }
-    }
-
-    public String get(int i)
-    {
-        return suffixes[i].getSuffix();
     }
 }

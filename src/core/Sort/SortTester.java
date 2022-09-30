@@ -34,7 +34,7 @@ public class SortTester
         this.runtimes = new ArrayList<ArrayList<Double>>();
 
         int i = 0;
-        while(i < 8)
+        while(i < 7)
         {
             System.out.println("N = " + n);
 
