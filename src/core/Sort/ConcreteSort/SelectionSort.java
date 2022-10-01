@@ -1,29 +1,24 @@
-package core.Sort.ConcreteSort;
+package core.sort.ConcreteSort;
 
-import core.Suffix;
-import core.Sort.AbstractSort;
+import core.sequence.Sequence;
+import core.sort.Sorter;
 
-public class SelectionSort extends AbstractSort
+public class SelectionSort extends Sorter
 {
-
-    public SelectionSort() {}
-
     @Override
-    public void sort(Suffix[] suffixes)
+    public void sort(Sequence baseSequence, int[] suffixes)
     {
-        for(int i = 0; i < suffixes.length; i++)
+        for(int i = 0; i < baseSequence.getLength(); i++)
         {
             int min = i;
 
             for(int j = i + 1; j < suffixes.length; j++)
             {
-                if(suffixes[j].compareTo(suffixes[min]) < 0)
-                {
+                if(baseSequence.compareTo(j, min) < 0)
                     min = j;
-                }
             }
 
-            suffixes[i].swap(suffixes[min]);
+            suffixes[i] = min;
         }
     }
 }

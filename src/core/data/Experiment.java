@@ -2,6 +2,7 @@ package core.data;
 
 import java.util.ArrayList;
 
+import core.sequence.Sequence;
 import core.sequence.SuffixArray;
 import core.sort.Sorter;
 import lombok.Getter;
@@ -12,15 +13,12 @@ public class Experiment
     final private Sorter sorter;
     final private String ALPHABET;
     final private int INIT_N = 128;
-    final private int sampleSize;
+    final private int SAMPLE_SIZE;
 
     ArrayList<SuffixArray> suffixArrays;
-    ArrayList<ArrayList<Double>> runtimes;
-
     ExperimentResults results;
 
-    final private double RUNTIME_CAP = 50_000;
-    private boolean isOverRuntimeCap = false;
+    final private int MAX_INPUT_NUM = 4;
 
     public Experiment(Sorter sorter, String alphabet, int k)
     {
@@ -28,59 +26,53 @@ public class Experiment
         this.ALPHABET = alphabet;
 
         this.suffixArrays = new ArrayList<SuffixArray>();
-        this.sampleSize = k;
-
-        this.results = new ExperimentResults(sampleSize);
+        this.SAMPLE_SIZE = k;
     }
     
     public void execute()
     {
         int n = INIT_N;
-        this.runtimes = new ArrayList<ArrayList<Double>>();
-
+        results = new ExperimentResults(SAMPLE_SIZE, MAX_INPUT_NUM);
+        
         int i = 0;
-        while(i < 7)
+        while(i < MAX_INPUT_NUM)
         {
             System.out.println("N = " + n);
-
-            ArrayList<Double> samples = getSamples(n);
-            this.runtimes.add(samples);
+            getSamples(n);
             
             n = n << 1;
             i++;
         }
+
+        results.calculateAverage();
     }
 
-    private ArrayList<Double> getSamples(int n)
+    private void getSamples(int inputSize)
     {
-        ArrayList<Double> samples = new ArrayList<Double>();
-
-        for(int i = 0; i < this.sampleSize; i++)
+        for(int i = 0; i < this.SAMPLE_SIZE; i++)
         {
-            SuffixArray suffArr = new SuffixArray(this.sorter, this.ALPHABET, n);
+            Sequence sequence = new Sequence(ALPHABET, inputSize);
+            sequence.generateRandom();
+
+            SuffixArray suffArr = new SuffixArray(sorter, sequence);
             this.suffixArrays.add(suffArr);
 
-            double runtime = this.timeExecution(i, n);
+            float runtime = this.timeExecution(suffArr);
+            results.add(i, inputSize, runtime);
+
             System.out.println("Observation #" + (i + 1) + ": " + Double.toString(runtime));
 
-            samples.add(runtime);
-
-            if(runtime > RUNTIME_CAP)
-                this.isOverRuntimeCap = true;
+            // samples.add(runtime);
         }
-
-        return samples;
     }
 
-    private double timeExecution(int i, int n)
+    private float timeExecution(SuffixArray suffixArray)
     {
-        int nIndex = (int) Math.round((Math.log(n) - Math.log(INIT_N)) / Math.log(2));
-
         long start = System.nanoTime();
-        this.suffixArrays.get(nIndex * this.sampleSize + i).sort();
+        suffixArray.sort();
         long end = System.nanoTime();
 
-        double runtime = (end - start) * 1e-6;
+        float runtime = (float)((end - start) * 1e-6); // TODO: extract constant
         return runtime;
     }
 }

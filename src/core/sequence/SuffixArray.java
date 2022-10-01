@@ -10,12 +10,12 @@ public class SuffixArray
     private int[] suffixArray;
     @Getter private final int length;
 
-    public SuffixArray(Sorter sorter, String alphabet, int n)
+    public SuffixArray(Sorter sorter, Sequence sequence)
     {
         this.sorter = sorter;
-        this.length = n;
-        this.baseSequence = new Sequence(alphabet, n);
-        this.suffixArray = new int[n];
+        this.baseSequence = sequence;
+        this.length = sequence.getLength();
+        this.suffixArray = new int[length];
     }
 
     public String get(int i)

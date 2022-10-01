@@ -2,12 +2,13 @@ package log;
 
 import java.io.IOException;
 
+import core.data.AverageRuntime;
 import core.data.Experiment;
-import core.data.Runtime;
 
-public class RuntimeLogger extends CSVLogger 
+public class AverageLogger extends CSVLogger
 {
-    public RuntimeLogger(Experiment experiment) throws IOException 
+
+    public AverageLogger(Experiment experiment) throws IOException 
     {
         super(experiment);
     }
@@ -15,7 +16,7 @@ public class RuntimeLogger extends CSVLogger
     @Override
     public String getFilename() 
     {
-        FORMAT = DAT_DIR + "raw_data/%sRuntime_%dSamples.csv";
+        FORMAT = DAT_DIR + "%sAverageRuntime_%dSamples.csv";
 
         String sortName = this.experiment.getSorter().getClass().getSimpleName();
         int sampleSize = this.experiment.getSAMPLE_SIZE();
@@ -28,9 +29,9 @@ public class RuntimeLogger extends CSVLogger
     {
         this.printHeaders();
 
-        while(results.hasNextRuntime())
+        while(results.hasNextAverage())
         {
-            Runtime currentRuntime = results.nextRuntime();
+            AverageRuntime currentRuntime = results.nextAverage();
             writer.append(currentRuntime.toString() + "\n");
         }
 
@@ -39,6 +40,6 @@ public class RuntimeLogger extends CSVLogger
 
     private void printHeaders() throws IOException
     {
-        this.writer.append("sample_num,input_size,runtime\n");
+        this.writer.append("input_size,ave_runtime\n");
     }
 }

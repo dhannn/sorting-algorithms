@@ -2,3 +2,5 @@
 dat/*.csv
 dat/raw_data/*.csv
 dat/raw_data/*.txt
+*.class
+*.jar
