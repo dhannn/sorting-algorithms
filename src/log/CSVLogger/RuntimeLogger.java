@@ -1,4 +1,4 @@
-package log;
+package log.CSVLogger;
 
 import java.io.IOException;
 
@@ -17,7 +17,7 @@ public class RuntimeLogger extends CSVLogger
     {
         FORMAT = DAT_DIR + "raw_data/%sRuntime_%dSamples.csv";
 
-        String sortName = this.experiment.getSorter().getClass().getSimpleName();
+        String sortName = getSortName();
         int sampleSize = this.experiment.getSAMPLE_SIZE();
 
         return String.format(FORMAT, sortName, sampleSize);
@@ -37,7 +37,7 @@ public class RuntimeLogger extends CSVLogger
         this.writer.close();
     }
 
-    private void printHeaders() throws IOException
+    protected void printHeaders() throws IOException
     {
         this.writer.append("sample_num,input_size,runtime\n");
     }

@@ -18,7 +18,7 @@ public class Experiment
     ArrayList<SuffixArray> suffixArrays;
     ExperimentResults results;
 
-    final private int MAX_INPUT_NUM = 4;
+    final private int MAX_INPUT_NUM = 6;
 
     public Experiment(Sorter sorter, String alphabet, int k)
     {
@@ -61,8 +61,6 @@ public class Experiment
             results.add(i, inputSize, runtime);
 
             System.out.println("Observation #" + (i + 1) + ": " + Double.toString(runtime));
-
-            // samples.add(runtime);
         }
     }
 

@@ -3,6 +3,7 @@ package core.sort.ConcreteSort;
 import core.sequence.Sequence;
 import core.sort.Sorter;
 
+
 public class SelectionSort extends Sorter
 {
     @Override
@@ -14,11 +15,14 @@ public class SelectionSort extends Sorter
 
             for(int j = i + 1; j < suffixes.length; j++)
             {
-                if(baseSequence.compareTo(j, min) < 0)
+                String a = baseSequence.getSuffix(j);
+                String b = baseSequence.getSuffix(min);
+                
+                if(compare(a, b) < 0)
                     min = j;
             }
 
-            suffixes[i] = min;
+            swap(suffixes, i, min);
         }
     }
 }

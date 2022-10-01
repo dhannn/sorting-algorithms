@@ -1,4 +1,4 @@
-package log;
+package log.CSVLogger;
 
 import java.io.IOException;
 
@@ -38,7 +38,7 @@ public class AverageLogger extends CSVLogger
         this.writer.close();
     }
 
-    private void printHeaders() throws IOException
+    protected void printHeaders() throws IOException
     {
         this.writer.append("input_size,ave_runtime\n");
     }
