@@ -14,6 +14,8 @@ public class Experiment
     final private String ALPHABET;
     final private int INIT_N = 128;
     final private int SAMPLE_SIZE;
+    
+    private final NanoConverter unit = NanoConverter.TO_SECOND;
 
     ArrayList<SuffixArray> suffixArrays;
     ExperimentResults results;
@@ -70,7 +72,7 @@ public class Experiment
         suffixArray.sort();
         long end = System.nanoTime();
 
-        float runtime = (float)((end - start) * 1e-6); // TODO: extract constant
+        float runtime = (float)((end - start) * unit.getConversionFactor());
         return runtime;
     }
 }
