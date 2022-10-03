@@ -1,63 +1,58 @@
 package log;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
-import core.SuffixArray;
-import core.Sort.SortTester;
+import core.data.Experiment;
+import core.sequence.SuffixArray;
 
-public class RawDataLogger extends Logger
+public class RawDataLogger extends BasicLogger
 {
-    final private String FORMAT = "dat/raw_data/%s_SuffixArrays_N%d_%d.txt";
-    private int iter;
-    private int iterK = 0;
-    private int iterN = 0;
+    private String sortDir;
+    private int currentSample = 0;
 
-    public RawDataLogger(SortTester tester) throws IOException 
+    public RawDataLogger(Experiment experiment)
     {
-        super(tester);
-        this.writer.close();
+        this.experiment = experiment;
+        this.results = experiment.getResults();
+    }
+
+    @Override
+    public void print() throws IOException 
+    {   
+        for(SuffixArray suffixArray: experiment.getSuffixArrays())
+        {
+            writer = new FileWriter(getFilename());
+
+            writer.append("Base Sequence: \n");
+            writer.append(suffixArray.getBaseSequence().getSuffix(0) + "\n");
+
+            writer.append("\nRuntime: " + results.getRuntimes()[currentSample - 1].runtime() + "ms\n");
+            writer.append("\nSuffix Array: \n");
+            writer.append(suffixArray.toString() + "\n");;
+            writer.close();
+        }
     }
 
     @Override
     public String getFilename() 
     {
-        SuffixArray currentSuffixArray = this.tester.getSuffixArrays().get(iter);
-        String sortName = currentSuffixArray.getSorter().getClass().getSimpleName();
-        return String.format(FORMAT, sortName, iterN, iterK + 1);
+        makeDirectory();
+
+        FORMAT = sortDir + "/N%d_Sample%d.txt";
+        int inputSize = results.getRuntimes()[currentSample].inputSize();
+        int sampleNum = currentSample % results.getSAMPLE_SIZE() + 1;
+        
+        String temp = String.format(FORMAT, inputSize, sampleNum);
+        currentSample++;
+
+        return temp;
     }
-
-    @Override
-    public void print() throws IOException 
+    
+    private void makeDirectory()
     {
-        ArrayList<SuffixArray> suffixArrays = this.tester.getSuffixArrays();
-
-        for(int i = 0; i < suffixArrays.size(); i++)
-        {
-            SuffixArray currentSuffixArray = suffixArrays.get(i);
-            this.iter = i;
-            this.iterN = currentSuffixArray.getInputSize();
-            this.iterK = i % this.tester.getK();
-
-            this.writer = new FileWriter(getFilename());
-            this.printFile(currentSuffixArray);
-            this.writer.close();
-        }
-    }
-
-    private void printFile(SuffixArray curr) throws IOException
-    {
-        this.writer.append("Sequence:\n" + curr.getBaseSequence() + "\n");
-        this.writer.append("\nSuffix array:\n");
-
-        for(int i = 0; i < curr.getInputSize(); i++)
-        {
-            this.writer.append(curr.get(i) + "\n");
-        }
-
-        int nIndex = (int) Math.round((Math.log(iterN) - Math.log(this.tester.getINIT_N())) / Math.log(2));
-
-        this.writer.append("\nRuntime:\n" + this.tester.getRuntimes().get(nIndex).get(iterK) + "ms\n");
+        sortDir = DAT_DIR + "raw_data/" + getSortName();
+        new File(sortDir).mkdir();
     }
 }

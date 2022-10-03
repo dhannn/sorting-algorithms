@@ -1,21 +1,25 @@
 import java.io.IOException;
 
-import core.Sort.SortTester;
-import core.Sort.ConcreteSort.DummySort;
+import core.data.Experiment;
+import core.sort.ConcreteSort.MergeSort;
+import core.sort.ConcreteSort.SelectionSort;
+// import log.RawDataLogger;
+// import log.CSVLogger.AverageLogger;
+// import log.CSVLogger.RuntimeLogger;
 import log.RawDataLogger;
-import log.SummaryLogger;
+import log.CSVLogger.*;;
 
 public class Main 
 {
     public static void main(String[] args) throws IOException
     {
-        SortTester test = new SortTester(new DummySort(), "actg", 10);
-        test.execute();
-
-        RawDataLogger rdLogger = new RawDataLogger(test);
-        SummaryLogger sumLogger = new SummaryLogger(test);
-
-        rdLogger.print();
+        Experiment testSelectionSort = new Experiment(new MergeSort(), "actg", 100);
+        testSelectionSort.execute();
+        RuntimeLogger sumLogger = new RuntimeLogger(testSelectionSort);
+        AverageLogger aveLogger = new AverageLogger(testSelectionSort);
+        RawDataLogger rawLogger = new RawDataLogger(testSelectionSort);
         sumLogger.print();
+        aveLogger.print();
+        rawLogger.print();
     }   
 }
