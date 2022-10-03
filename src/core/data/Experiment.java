@@ -15,7 +15,7 @@ public class Experiment
     final private int INIT_N = 128;
     final private int SAMPLE_SIZE;
     
-    private final NanoConverter unit = NanoConverter.TO_SECOND;
+    private final NanoConverter unit = NanoConverter.TO_MILLISECOND;
 
     ArrayList<SuffixArray> suffixArrays;
     ExperimentResults results;
