@@ -42,6 +42,10 @@
                 <path location="${jar.dir}/${ant.project.name}.jar"/>
             </classpath>
         </java>
+
+        <exec dir="." executable="python">
+            <arg line="${src.dir}/plot/plot.py"/>
+        </exec>
     </target>
 
     <target name="clean">
