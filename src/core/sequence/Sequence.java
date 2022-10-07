@@ -3,12 +3,13 @@ package core.sequence;
 import java.util.Random;
 
 import lombok.Getter;
+import lombok.Setter;
 
 public class Sequence
 {
     private final String ALPHABET;
     @Getter private int length;
-    private String sequence;
+    @Setter private String sequence;
     
     public Sequence(String alphabet, int n)
     {
