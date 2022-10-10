@@ -43,7 +43,6 @@ public class SuffixArray
             String format = "%" + digits + "d: %s\n";
 
             strBuilder.append(String.format(format, index, baseSequence.getSuffix(index)));
-            // strBuilder.append(index + ": " + baseSequence.getSuffix(index) + "\n");
         }
 
         return strBuilder.toString();

@@ -1,7 +1,6 @@
 import java.io.IOException;
 
 import core.data.Experiment;
-import core.sort.ConcreteSort.MergeSort;
 import core.sort.ConcreteSort.QuickSort;
 import core.sort.ConcreteSort.SelectionSort;
 import log.RawDataLogger;
@@ -13,8 +12,8 @@ public class Main
     {
 
         Experiment[] experiments = {
-            new Experiment(new SelectionSort(), "actg", 100),
-            new Experiment(new MergeSort(), "actg", 100)
+            new Experiment(new SelectionSort(), "actg", 50),
+            new Experiment(new QuickSort(), "actg", 50)
         };
 
         RuntimeLogger sumLogger;

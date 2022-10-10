@@ -20,7 +20,7 @@ public class Experiment
     ArrayList<SuffixArray> suffixArrays;
     ExperimentResults results;
 
-    final private int MAX_INPUT_NUM = 6;
+    final private int MAX_INPUT_NUM = 8;
 
     public Experiment(Sorter sorter, String alphabet, int k)
     {

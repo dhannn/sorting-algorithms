@@ -34,18 +34,22 @@ def configurePlot (axes):
     axes.set_yscale('log', base = 2)
     plt.legend(loc = "upper left")
     
-csvFilenames = ["dat/SelectionSortAverageRuntime_100Samples.csv", 
-                "dat/MergeSortAverageRuntime_100Samples.csv"]
+csvFilenames = ["dat/SelectionSortAverageRuntime_50Samples.csv", 
+                "dat/QuickSortAverageRuntime_50Samples.csv"]
 
 fig = plt.figure()
 axes = fig.add_axes([1.0,1.0,1.6,1.6])
+
 
 inputSize, aveRuntime = [1,0]
 
 readFile(csvFilenames[0], inputSize, 
          aveRuntime, 'r', "Selection Sort")
 readFile(csvFilenames[1], inputSize, 
-         aveRuntime, 'b', "Merge Sort")
+         aveRuntime, 'b', "Quicksort")
+
 configurePlot(axes)
+axes.grid()
+axes.minorticks_on()
 
 plt.savefig("dat/output.png", dpi = 100, bbox_inches = 'tight')
